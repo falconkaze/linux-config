@@ -1,4 +1,4 @@
-set nocompatible  												"去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限 
+set nocompatible									"去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限 
 
 "use Chinese to show help
 if version >= 603
@@ -6,33 +6,33 @@ if version >= 603
 	set encoding=utf-8
 endif
 
-syntax on																	"自动语法高亮
-filetype plugin indent on									"检测文件类型，相关插件及设置。
+syntax on"自动语法高亮
+filetype plugin indent on							"检测文件类型，相关插件及设置。
 
-set nu																		"nu是number的缩写显示行号
-set ruler																	"显示标尺，状态栏的行数信息
+set nu												"nu是number的缩写显示行号
+set ruler											"显示标尺，状态栏的行数信息
 
-"set scrolloff=6													"上下可视行数
+"set scrolloff=6									"上下可视行数
 
-"set guioptions=m													"隐藏菜单栏
+"set guioptions=m									"隐藏菜单栏
 
-"set foldenable				" 允许折叠      
-"set foldmethod=manual			" 手动折叠    
+"set foldenable										"允许折叠      
+"set foldmethod=manual								"手动折叠    
 
 " 插入模式下上下左右移动光标  
 
 "-----------------------------------Plugin------------------------------------
-set rtp+=~/.vim/bundle/Vundle.vim					" initialize vundle
-"filetype off															" required
+set rtp+=~/.vim/bundle/Vundle.vim					"initialize vundle
+"filetype off										"required
 
-call vundle#begin()												" start- all plugins below
-Plugin 'morhetz/gruvbox'									"安装gruvbox主题
-Plugin 'scrooloose/nerdtree'							"NERD tree文件浏览器
+call vundle#begin()									"start- all plugins below
+Plugin 'morhetz/gruvbox'							"安装gruvbox主题
+Plugin 'scrooloose/nerdtree'						"NERD tree文件浏览器
 
-call vundle#end()													" stop - all plugins above
+call vundle#end()									"stop - all plugins above
 "-----------------------------------theme config------------------------------------
 colorscheme slate
-hi Normal ctermfg=251 ctermbg=none				"ctermfg前景色，ctermbg背景色
+hi Normal ctermfg=251 ctermbg=none					"ctermfg前景色，ctermbg背景色
 "编程主题
 func SetTheme()
 	set bg=dark                     				"设置背景为黑色
@@ -57,9 +57,11 @@ au BufRead *.py,*,java exec ":call OpenFile()"
 func OpenFile()
 	if &filetype == 'python'
 		set shiftwidth=4															
-		set ts=4															"ts是tabstop的缩写，设置tab键宽四个空格
+		set ts=4									"ts是tabstop的缩写，设置tab键宽四个空格
+		set expandtab
 	else 
 		set shiftwidth=2
+		set ts=4
 	endif
 endfunc
 
