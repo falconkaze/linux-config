@@ -248,15 +248,15 @@ endfunc
 set expandtab				"把制表符扩展为空格
 
 " 快捷键打开google浏览器
-"autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :!start "google-chrome-stable" "%:p"<CR>
+"autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :!start "google-chrome-stable" "%"<CR>
 autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :! google-chrome-stable %<CR>
 "-----------------------------------Quick Run!--------------------------------------
-map <F5> :call CompileRunGcc()<CR>
-func! CompileRunGcc()
+map <F5> :call CompileRun()<CR>
+func! CompileRun()
     exec "w"
     if &filetype == 'c'
-        exec "!g++ % -o %<"
-        exec "!time ./%<"
+        exec "!gcc % -o target/%<.out"
+        exec "!time target/%<.out"
     elseif &filetype == 'cpp'
         exec "!g++ % -o %<"
         exec "!time ./%<"
@@ -277,28 +277,3 @@ func! CompileRunGcc()
         exec "!firefox %.html &"
     endif
 endfunc
-
-"---------------------------------auto fcitx----------------------------------
-let g:input_toggle = 1
-function! Fcitx2en()
-  let s:input_status = system("fcitx-remote")
-  if s:input_status == 2
-	let g:input_toggle = 1
-	let l:a = system("fcitx-remote -c")
-  endif
-endfunction
-
-function! Fcitx2zh()
-  let s:input_status = system("fcitx-remote")
-  if s:input_status != 2 && g:input_toggle == 1
-	let l:a = system("fcitx-remote -o")
-	let g:input_toggle = 0
-  endif
-endfunction
-
-set ttimeoutlen=150
-"退出插入模式
-autocmd InsertLeave * call Fcitx2en()
-"进入插入模式
-autocmd InsertEnter *.md call Fcitx2zh()
-"##### auto fcitx end ######
