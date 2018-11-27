@@ -9,18 +9,13 @@ guake -e backend
 guake -e 'tmux split-window -h'
 guake -e jv
 
-guake -n 1
-guake -r db -e "tmux new -s db"
+guake -n 1 -r db -e "tmux new -s db"
 
-guake -n 1
-guake -r redis
-guake -e 'tmux new -s redis'
+guake -n 1 -r redis -e 'tmux new -s redis'
 
-guake -n 1
-guake -r ydcv -e "tmux new -s ydcv"
+guake -n 1 -r ydcv -e "tmux new -s ydcv"
 guake -e "tmux split-window -h;ydcv"
 guake -e ". note.sh;vim + english.md"
 
-guake -n 1
-guake -r note -e "tmux new -s note"
+guake -n 1 -r note -e "tmux new -s note"
 guake -e '. note.sh'
