@@ -157,8 +157,9 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 #                   software location config
 # ----------------------------------------------------------------------------
 #注意软件名设置及大小写
-assign [class="Google-chrome"] 3
+assign [class="Sakura"] 1
 assign [class="idea"] 2
+assign [class="Google-chrome"] 3
 assign [class="cloud-music"] 4
 assign [class="Synergy"] 10
 #assign [class="Xfce4-terminal"] 5
@@ -257,6 +258,7 @@ for_window [instance="guake"] floating enable
 for_window [class="Xfce4-terminal"] floating enable
 for_window [class="Typora"] floating enable
 for_window [class="Go-for-it"] floating enable
+for_window [class="feh"] floating enable
 
 focus_follows_mouse no
 
