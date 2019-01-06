@@ -261,8 +261,8 @@ func! CompileRun()
         exec "!g++ % -o %<"
         exec "!time ./%<"
     elseif &filetype == 'java'
-        exec "!javac %"
-        exec "!time java %<"
+        exec "!javac -d target  %"
+        exec "!time java -cp target %<"
     elseif &filetype == 'sh'
         :!time bash %
     elseif &filetype == 'python'
