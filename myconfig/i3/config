@@ -20,9 +20,12 @@ font pango:monospace 8
 #                   autostart software when start i3
 # ----------------------------------------------------------------------------
 exec --no-startup-id compton -b
-exec_always --no-startup-id feh --bg-scale "~/Pictures/wallpaper/M4A1-001.png"
+exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpaper/M4A1-001.png
 exec --no-startup-id /usr/bin/google-chrome-stable
-exec --no-starup-id /usr/bin/synergy
+#exec --no-startup-id /usr/bin/synergy
+exec --no-startup-id /usr/bin/guake
+exec --no-startup-id /usr/bin/redshift
+exec --no-startup-id /usr/bin/sakura
 # exec --no-startup-id /usr/local/bin/idea
 # exec --no-startup-id /usr/bin/netease-cloud-music
 #exec --no-startup-id LANG="zh_CN.UTF-8" fcitx &
@@ -31,7 +34,6 @@ exec --no-starup-id /usr/bin/synergy
 #exec --no-startup-id nm-applet
 #exec --no-startup-id fcitx
 #exec --no-startup-id megasync
-#exec --no-startup-id redshift
 #exec --no-startup-id blueman-applet
 #exec --no-startup-id ss-qt5
 
@@ -51,8 +53,8 @@ bindsym $mod+d exec dmenu_run
 # printscreen--scrot(Print=PrtSc/PrintScreen)
 bindsym Print exec scrot -e 'mv $f ~/Pictures/screenshot'
 bindsym --release $mod+Print exec --no-startup-id scrot -s -e 'mv $f ~/Pictures/screenshot'
-bindsym $mod+Ctrl+Up exec --no-startup-id amixer -c 0 -q set Master 2dB+ unmute
-bindsym $mod+Ctrl+Down exec --no-startup-id amixer -c 0 -q set Master 2dB- unmute
+bindsym $mod+Ctrl+Up exec --no-startup-id amixer -c 1 -q set Master 2dB+ unmute
+bindsym $mod+Ctrl+Down exec --no-startup-id amixer -c 1 -q set Master 2dB- unmute
 
 #exec kill focused window
 bindsym $mod+Shift+q kill
