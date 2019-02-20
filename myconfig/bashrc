@@ -4,22 +4,10 @@
 # need pkgfile.提示未知命令需要的包.
 source /usr/share/doc/pkgfile/command-not-found.bash
 # 输入目录，回车，自动在前面加cd命令
-shopt -s autocd
+#shopt -s autocd
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
-
-alias ls='ls --color=auto'
-#alias dir='dir --color=auto'
-#alias vdir='vdir --color=auto'
-
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-
-#PS1='[\u@\h \W]\$ '
-#PS1="\[\033[0;32m\]\A \[\033[0;31m\]\u\[\033[0;34m\]@\[\033[0;35m\]\h\[\033[0;34m\]:\[\033[00;36m\]\w\[\033[0;33m\] $\[\033[0m\] "
-PS1="\[\033[m\]->\W\[\033[0;33m\] $\[\033[0m\] "
 
 # This file is sourced by all *interactive* bash shells on startup,
 # including some apparently interactive shells such as scp and rcp
@@ -125,6 +113,49 @@ fi
 for sh in /etc/bash/bashrc.d/* ; do
 	[[ -r ${sh} ]] && source "${sh}"
 done
+if [[ -f ~/.bash_aliases ]]; then
+  . ~/.bash_aliases
+fi
+if [[ -f ~/.bash_export ]]; then
+  . ~/.bash_export
+fi
 
 # Try to keep environment pollution down, EPA loves us.
 unset use_color sh
+
+export PATH=$PATH:$HOME/git/github/linux-config/sh
+#PS1='[\u@\h \W]\$ '
+#PS1="\[\033[0;32m\]\A \[\033[0;31m\]\u\[\033[0;34m\]@\[\033[0;35m\]\h\[\033[0;34m\]:\[\033[00;36m\]\w\[\033[0;33m\] $\[\033[0m\] "
+#PS1="\[\033[m\]->\W\[\033[0;33m\] $\[\033[0m\] "
+
+# 显示分支官方实现
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWCOLORHINTS=true
+if [ -f ~/.config/completion/git-completion.bash ]; then
+  source ~/.config/completion/git-prompt.sh
+# 这一行中间中括号部分语法与linux终端提示符语法相同，可以自行修改
+  PROMPT_COMMAND='__git_ps1 "[\u@\h:\w]" "\\\$ "'
+fi
+
+# GIT 命令&分支自动完成
+if [ -f ~/.config/completion/git-completion.bash ]; then
+  . ~/.config/completion/git-completion.bash
+fi
+
+alias l='ls --color=auto'
+alias ls='ls --color=auto'
+alias ll='ls -al --color=auto'
+alias la='ls -a --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias ping="ping -c 3"
+
+alias blog="cd ~/git/github/blog"
+alias note="cd ~/git/github/2018-notebook"
+alias config="cd ~/git/github/linux-config"
+alias read-note="cd ~/git/github/read-note"
