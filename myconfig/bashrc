@@ -1,8 +1,6 @@
 #
 # ~/.bashrc
 #
-# need pkgfile.提示未知命令需要的包.
-source /usr/share/doc/pkgfile/command-not-found.bash
 # 输入目录，回车，自动在前面加cd命令
 #shopt -s autocd
 
@@ -123,39 +121,83 @@ fi
 # Try to keep environment pollution down, EPA loves us.
 unset use_color sh
 
-export PATH=$PATH:$HOME/git/github/linux-config/sh
-#PS1='[\u@\h \W]\$ '
+# need pkgfile.提示未知命令需要的包.
+source /usr/share/doc/pkgfile/command-not-found.bash
+source /usr/share/nvm/init-nvm.sh
+source ~/.bazel/bin/bazel-complete.bash
+
 #PS1="\[\033[0;32m\]\A \[\033[0;31m\]\u\[\033[0;34m\]@\[\033[0;35m\]\h\[\033[0;34m\]:\[\033[00;36m\]\w\[\033[0;33m\] $\[\033[0m\] "
 #PS1="\[\033[m\]->\W\[\033[0;33m\] $\[\033[0m\] "
-
+PS1='[\u: \w]\$ '
 # 显示分支官方实现
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWCOLORHINTS=true
-if [ -f ~/.config/completion/git-completion.bash ]; then
+if [ -f ~/.config/completion/git-prompt.sh ]; then
   source ~/.config/completion/git-prompt.sh
 # 这一行中间中括号部分语法与linux终端提示符语法相同，可以自行修改
-  PROMPT_COMMAND='__git_ps1 "[\u@\h:\w]" "\\\$ "'
+  PROMPT_COMMAND='__git_ps1 "[\u:\w]" "\\\$ "'
 fi
-
 # GIT 命令&分支自动完成
 if [ -f ~/.config/completion/git-completion.bash ]; then
   . ~/.config/completion/git-completion.bash
 fi
 
-alias l='ls --color=auto'
+alias l='ls -CF --color=auto'
 alias ls='ls --color=auto'
-alias ll='ls -al --color=auto'
-alias la='ls -a --color=auto'
+alias ll='ls -AlF --color=auto'
+alias la='ls -A --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+alias gcc="gcc -Wall"
 
 alias ping="ping -c 3"
+
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias mip='ifconfig enp1s0 | grep "inet " | awk '\''{print $2 }'\'''
+alias timestamp='nanotime=`date +%s%N`;echo ${nanotime:0:13}'
+alias time2date='fun() { date -d @${1} "+%Y-%m-%d %H:%M:%S";};fun'
+
+alias reload='source ~/.bashrc'
+alias bashrc='vim ~/.bashrc && source ~/.bashrc'
+alias bashpr='vim ~/.bash_profile && source ~/.bash_profile'
+alias bashal='vim ~/.bash_aliases && source ~/.bash_aliases'
+
+# 修改rm
+alias rm=trash
+alias rl='ls ~/.trash/'
+alias ur=recoverfile
+
+recoverfile()
+{
+    mv -i ~/.trash/$@ ./
+}
+
+trash()
+{
+    mv $@ ~/.trash
+}
 
 alias blog="cd ~/git/github/blog"
 alias note="cd ~/git/github/2018-notebook"
 alias config="cd ~/git/github/linux-config"
 alias read-note="cd ~/git/github/read-note"
+
+# bash history config
+export HISTCONTROL=ignoreboth
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+export HISTIGNORE=ls
+
+# language config
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_CTYPE=zh_CN.UTF-8
+
+# set default editor
+export EDITOR=vi
+
+~/work/shell/usable/english_bash.sh

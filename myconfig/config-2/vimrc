@@ -36,7 +36,7 @@ Plugin 'scrooloose/nerdtree'              " NERD tree文件浏览器
 Plugin 'scrooloose/nerdcommenter'         " 方便写注释
 Plugin 'Xuyuanp/nerdtree-git-plugin'      " 修改文件时，改变状态显示
 
-Plugin 'Valloric/YouCompleteMe'           " 代码提醒
+"Plugin 'Valloric/YouCompleteMe'           " 代码提醒
 "Plugin 'vim-syntastic/syntastic'          " 代码检查
 
 Plugin 'SirVer/ultisnips'                 " python自动生成代码
@@ -45,9 +45,9 @@ Plugin 'honza/vim-snippets'               " Snippets are separated from the engi
 
 Plugin 'Lokaltog/vim-powerline'           " 美化状态栏
 Plugin 'junegunn/vim-easy-align'          " 快速对齐格式化
-Plugin 'terryma/vim-multiple-cursors'     " 多光标编辑
+"Plugin 'terryma/vim-multiple-cursors'     " 多光标编辑
 
-Plugin 'tell-k/vim-autopep8'
+"Plugin 'tell-k/vim-autopep8'
 Plugin 'Yggdroot/indentLine'
 Plugin 'jiangmiao/auto-pairs'             " 括号和引号的自动补全
 "Plugin 'table-mode'                       " markdown格式化表格
@@ -71,7 +71,7 @@ set guifont=Monaco:h17          					"设置字体和字的大小
 "hi Normal ctermfg=251 ctermbg=none						"ctermfg前景色，ctermbg背景色
 "编程主题
 func SetTheme()
-	set bg=dark                     					"设置背景为黑色
+	"set bg=dark                     					"设置背景为黑色
 	colorscheme gruvbox            						"设置主题为 gruvbox
 	set guioptions=                 					"去掉两边的scrollbar
 	set guifont=Monaco:h17          					"设置字体和字的大小
