@@ -121,11 +121,6 @@ fi
 # Try to keep environment pollution down, EPA loves us.
 unset use_color sh
 
-# need pkgfile.提示未知命令需要的包.
-source /usr/share/doc/pkgfile/command-not-found.bash
-source /usr/share/nvm/init-nvm.sh
-source ~/.bazel/bin/bazel-complete.bash
-
 #PS1="\[\033[0;32m\]\A \[\033[0;31m\]\u\[\033[0;34m\]@\[\033[0;35m\]\h\[\033[0;34m\]:\[\033[00;36m\]\w\[\033[0;33m\] $\[\033[0m\] "
 #PS1="\[\033[m\]->\W\[\033[0;33m\] $\[\033[0m\] "
 PS1='[\u: \w]\$ '
@@ -162,7 +157,8 @@ alias gcc="gcc -Wall"
 alias ping="ping -c 3"
 
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-alias mip='ifconfig enp1s0 | grep "inet " | awk '\''{print $2 }'\'''
+#alias mip='ifconfig enp1s0 | grep "inet " | awk '\''{print $2 }'\'''
+alias mip='bash ~/git/github/linux-config/sh/ip.sh'
 alias timestamp='nanotime=`date +%s%N`;echo ${nanotime:0:13}'
 alias time2date='fun() { date -d @${1} "+%Y-%m-%d %H:%M:%S";};fun'
 
@@ -201,3 +197,12 @@ export LC_CTYPE=zh_CN.UTF-8
 export EDITOR=vi
 
 ~/work/shell/usable/english_bash.sh
+
+# need pkgfile.提示未知命令需要的包.
+source_files=("/usr/share/doc/pkgfile/command-not-found.bash" \
+    "/usr/share/nvm/init-nvm.sh" \
+    "~/.bazel/bin/bazel-complete.sh")
+for source_file in $source_files; do
+    [[ -r ${source_file} ]] && source "${source_file}"
+done
+unset source_files

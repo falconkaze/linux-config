@@ -55,6 +55,8 @@ Plugin 'Lokaltog/vim-powerline'           " 美化状态栏
 Plugin 'Yggdroot/indentLine'
 Plugin 'autowitch/hive.vim'               " hive 高亮
 
+"Plugin 'yianwillis/vimcdoc'               " 中文帮助手册
+
 Plugin 'Chiel92/vim-autoformat'             " 格式化代码
 "Plugin 'terryma/vim-multiple-cursors'     " 多光标编辑
 "Plugin 'tell-k/vim-autopep8'
@@ -62,7 +64,6 @@ Plugin 'junegunn/vim-easy-align'          " 快速对齐格式化
 Plugin 'hotoo/pangu.vim'                  " 格式化中文文档
 "Plugin 'jiangmiao/auto-pairs'             " 括号和引号的自动补全
 "Plugin 'table-mode'                       " markdown格式化表格
-"Plugin 'yianwillis/vimcdoc'               " 中文帮助手册
 "Plugin 'tell-k/vim-autopep8'
 "Plugin 'scrooloose/nerdcommenter'
 
@@ -272,6 +273,7 @@ func OpenFile()
 "	set softtabstop				"让vim把连续的空格视为一个制表符
     set ts=4				"ts是tabstop的缩写，设置tab键宽四个空格
   else
+    set shiftwidth=4                                "设定<<和>>命令缩进的宽度
 	set ts=2
     set shiftwidth=2                                "设定<<和>>命令缩进的宽度
   endif

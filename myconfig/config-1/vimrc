@@ -13,12 +13,12 @@ set ruler              " 显示标尺，状态栏的行数信息
 set guioptions+=m      " 隐藏菜单栏
 set laststatus=1       " 隐藏状态栏，2是显示状态栏
 set scrolloff=6        " 上下可视行数
-" 禁止显示滚动条
+" GUI时禁止显示滚动条
 set guioptions-=l
 set guioptions-=L
 set guioptions-=r
 set guioptions-=R
-" 禁止显示菜单和工具条
+" GUI时禁止显示菜单和工具条
 set guioptions-=m
 set guioptions-=T
 
@@ -33,6 +33,7 @@ Plugin 'morhetz/gruvbox'                  " 安装gruvbox主题
 Plugin 'altercation/vim-colors-solarized' " solarized主题
 
 Plugin 'scrooloose/nerdtree'              " NERD tree文件浏览器
+"Plugin 'scrooloose/nerdcommenter'
 Plugin 'Xuyuanp/nerdtree-git-plugin'      " 修改文件时，改变状态显示
 
 Plugin 'Valloric/YouCompleteMe'           " 代码提醒
@@ -43,16 +44,19 @@ Plugin 'junegunn/vim-easy-align'          " 快速对齐格式化
 "Plugin 'terryma/vim-multiple-cursors'     " 多光标编辑
 "Plugin 'table-mode'                       " markdown格式化表格
 "Plugin 'yianwillis/vimcdoc'               " 中文帮助手册
+
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 Plugin 'Yggdroot/indentLine'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'tell-k/vim-autopep8'
-"Plugin 'scrooloose/nerdcommenter'
+"Plugin 'tell-k/vim-autopep8'
+"Plugin 'vim-scripts/javacomplete'
 
 call vundle#end()                         "stop - all plugins above
 "-----------------------------------theme config------------------------------------
 colorscheme slate
 "colorscheme solarized
-set background=dark
+"set background=dark
 let g:solarized_termcolors=256 
 let g:solarized_termtrans=1
 let g:solarized_contrast="normal"
@@ -70,6 +74,10 @@ endfunc
 " 定义快捷键的前缀，即<Leader> 
 let mapleader=","
 cnoremap w!! w !sudo tee > /dev/null %
+let g:UltiSnipsExpandTrigger="<c-o>"
+" 跳至下个 tab stop
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 "Fast reloading of the .vimrc
 "map <silent> <leader>ss :source ~/.vimrc<cr>
