@@ -7,7 +7,11 @@ set nocompatible       " 去掉讨厌的有关vi一致性模式
 set fileencoding=utf-8 " 设置文件编码
 set termencoding=utf-8 " 设置终端编码
 set t_Co=256           " 开启256色支持
-set nu                 " nu是number的缩写显示行号
+"if has("termguicolors")
+"    " enable true color
+"    set termguicolors
+"endif
+set nonu               " nu是number的缩写显示行号
 set ruler              " 显示标尺，状态栏的行数信息
 " set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
 set guioptions+=m      " 隐藏菜单栏
@@ -21,6 +25,8 @@ set guioptions-=R
 " 禁止显示菜单和工具条
 set guioptions-=m
 set guioptions-=T
+" 拼写检查
+"set spell
 
 "---------------------------------------Plugin--------------------------------------
 set rtp+=~/.vim/bundle/Vundle.vim         " initialize vundle
@@ -29,27 +35,32 @@ call vundle#begin()                       " start- all plugins below
 
 Plugin 'VundleVim/Vundle.vim'             " 使用vundle管理插件
 
-Plugin 'morhetz/gruvbox'                  " 安装gruvbox主题
-Plugin 'altercation/vim-colors-solarized' " solarized主题
-
 Plugin 'scrooloose/nerdtree'              " NERD tree文件浏览器
 Plugin 'scrooloose/nerdcommenter'         " 方便写注释
 Plugin 'Xuyuanp/nerdtree-git-plugin'      " 修改文件时，改变状态显示
 
 "Plugin 'Valloric/YouCompleteMe'           " 代码提醒
 "Plugin 'vim-syntastic/syntastic'          " 代码检查
+Plugin 'sillybun/vim-repl'                " 代码执行
+
 
 Plugin 'SirVer/ultisnips'                 " python自动生成代码
 Plugin 'honza/vim-snippets'               " Snippets are separated from the engine. Add this if you want them
 "Plugin 'Shougo/deoplete.nvim'
 
-Plugin 'Lokaltog/vim-powerline'           " 美化状态栏
-Plugin 'junegunn/vim-easy-align'          " 快速对齐格式化
-"Plugin 'terryma/vim-multiple-cursors'     " 多光标编辑
+Plugin 'morhetz/gruvbox'                  " 安装gruvbox主题
+Plugin 'altercation/vim-colors-solarized' " solarized主题
 
-"Plugin 'tell-k/vim-autopep8'
+Plugin 'Lokaltog/vim-powerline'           " 美化状态栏
 Plugin 'Yggdroot/indentLine'
-Plugin 'jiangmiao/auto-pairs'             " 括号和引号的自动补全
+Plugin 'autowitch/hive.vim'               " hive 高亮
+
+Plugin 'Chiel92/vim-autoformat'             " 格式化代码
+"Plugin 'terryma/vim-multiple-cursors'     " 多光标编辑
+"Plugin 'tell-k/vim-autopep8'
+Plugin 'junegunn/vim-easy-align'          " 快速对齐格式化
+Plugin 'hotoo/pangu.vim'                  " 格式化中文文档
+"Plugin 'jiangmiao/auto-pairs'             " 括号和引号的自动补全
 "Plugin 'table-mode'                       " markdown格式化表格
 "Plugin 'yianwillis/vimcdoc'               " 中文帮助手册
 "Plugin 'tell-k/vim-autopep8'
@@ -63,20 +74,11 @@ set guioptions=                 					"去掉两边的scrollbar
 set guifont=Monaco:h17          					"设置字体和字的大小
 "colorscheme slate
 "colorscheme solarized
-"set background=dark
 "let g:solarized_termcolors=256 
 "let g:solarized_termtrans=1
 "let g:solarized_contrast="normal"
 "let g:solarized_visibility="normal"
 "hi Normal ctermfg=251 ctermbg=none						"ctermfg前景色，ctermbg背景色
-"编程主题
-func SetTheme()
-	"set bg=dark                     					"设置背景为黑色
-	colorscheme gruvbox            						"设置主题为 gruvbox
-	set guioptions=                 					"去掉两边的scrollbar
-	set guifont=Monaco:h17          					"设置字体和字的大小
-endfunc
-
 
 " 定义快捷键的前缀，即<Leader> 
 let mapleader=","
@@ -120,14 +122,18 @@ let g:NERDTreeIndicatorMapCustom = {
 let g:indentLine_char='|'
 let g:indentLine_enabled=1
 
+
+"---------------------------pangu------------------------------
+"autocmd BufWritePre *.markdown,*.md,*.wiki,*.cnx call PanGuSpacing()
+
 "--------------------------------vim-autopep8-----------------------------
 let g:autopep8_disable_show_diff=1
 
 "---------------------------------SirVer/ultisnips-----------------------
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<c-o>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -215,7 +221,7 @@ set nobackup				"默认不备份
 set clipboard=unnamed       "
 
 set wildmenu				"vim命令自动补全
-set gcr=a:block-blinkon0		"禁止关闭光标闪烁
+set gcr=i:ver50-ncvCursor,n-v:block-vCursor		"禁止关闭光标闪烁(guicursor)
 set cursorline				"高亮显示当前行
 "set cursorcolumn			"高亮显示当前列
 set incsearch				"开启实时搜索功能
@@ -238,8 +244,8 @@ syntax on									"允许制定语法高亮替代默认高亮，自动语法高�
 filetype plugin indent on							"检测文件类型，相关插件及设置
 set autoindent                          "继承前一行的缩进，特别适合用于多行注释,简写为ai
 set smartindent                         "为C语言提供自动缩进，简写为si
-set cindent                             "使用C样式的缩进
-set smarttab                            "在行和段开始处使用制表符
+"set cindent                             "使用C样式的缩进
+"set smarttab                            "在行和段开始处使用制表符
 "set mouse=a                             "激活鼠标
 "set backspace=eol,start,indent         "设置退格
 
@@ -257,8 +263,9 @@ func SetTitle()
 endfunc
 "----------------------------------when open file-------------------------------------
 set ts=4				"ts是tabstop的缩写，设置tab键宽四个空格
-set shiftwidth=2                                "设定<<和>>命令缩进的宽度
-au BufNewFile,BufRead *.py,*.java exec ":call OpenFile()"
+set shiftwidth=4                                "设定<<和>>命令缩进的宽度
+set expandtab				"把制表符扩展为空格
+au BufNewFile,BufRead *.py,*.java,*.sql exec ":call OpenFile()"
 func OpenFile()
   if &filetype == 'python'
 	set shiftwidth=4			"设置格式化时制表符占用空格数				
@@ -266,13 +273,14 @@ func OpenFile()
     set ts=4				"ts是tabstop的缩写，设置tab键宽四个空格
   else
 	set ts=2
+    set shiftwidth=2                                "设定<<和>>命令缩进的宽度
   endif
 endfunc
-set expandtab				"把制表符扩展为空格
 
 " 快捷键打开google浏览器
 "autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :!start "google-chrome-stable" "%:p"<CR>
 autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :! google-chrome-stable %<CR>
+au BufNewFile,BufRead *.hql set filetype=hive
 "-----------------------------------Quick Run!--------------------------------------
 map <F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
@@ -300,3 +308,38 @@ func! CompileRunGcc()
         exec "!firefox %.html &"
     endif
 endfunc
+
+" 打开文件时跳到关闭前所在的位置
+augroup resCur
+  autocmd!
+  autocmd BufReadPost * call setpos(".", getpos("'\""))
+augroup END
+
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+vnoremap <leader>" o<esc>i"<esc>v`><esc>la"<esc>
+vnoremap <leader>' o<esc>i'<esc>v`><esc>la'<esc>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+
+let g:autoformat_verbosemode=1 "开启详细模式便于查错
+nnoremap <F3> :Autoformat<cr>
+
+"let g:autoformat_autoindent = 0
+"let g:autoformat_retab = 0
+"let g:autoformat_remove_trailing_spaces = 0
+"autocmd FileType vim,tex let b:autoformat_autoindent=0
+"gg=G :retab :RemoveTrailingSpaces
+"
+"let g:formatdef_sqlformat = '"sqlformat --keywords upper -"'
+"let g:formatters_sql = ['sqlformat']

@@ -142,6 +142,10 @@ if [ -f ~/.config/completion/git-completion.bash ]; then
   . ~/.config/completion/git-completion.bash
 fi
 
+# --------------------------------------------------------------------
+#                       alias 配置
+# --------------------------------------------------------------------
+
 alias l='ls -CF --color=auto'
 alias ls='ls --color=auto'
 alias ll='ls -AlF --color=auto'
@@ -152,6 +156,7 @@ alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+
 alias gcc="gcc -Wall"
 
 alias ping="ping -c 3"
@@ -161,25 +166,20 @@ alias mip='ifconfig enp1s0 | grep "inet " | awk '\''{print $2 }'\'''
 alias timestamp='nanotime=`date +%s%N`;echo ${nanotime:0:13}'
 alias time2date='fun() { date -d @${1} "+%Y-%m-%d %H:%M:%S";};fun'
 
+alias hugonew='fun1() { file=(`hugo new ${1}`) && vim ${file[0]};};fun1'
+alias cd-='fun1() { for(( i = 1; i <= ${1}; i ++ ));do value=${value}"../"; done;cd ${value};};fun1'
+
 alias reload='source ~/.bashrc'
 alias bashrc='vim ~/.bashrc && source ~/.bashrc'
 alias bashpr='vim ~/.bash_profile && source ~/.bash_profile'
 alias bashal='vim ~/.bash_aliases && source ~/.bash_aliases'
 
+alias vimrc='vim ~/.vimrc'
+
 # 修改rm
-alias rm=trash
-alias rl='ls ~/.trash/'
-alias ur=recoverfile
-
-recoverfile()
-{
-    mv -i ~/.trash/$@ ./
-}
-
-trash()
-{
-    mv $@ ~/.trash
-}
+alias rm=trash-put
+alias rl=trash-list
+alias ur=trash-restore
 
 alias blog="cd ~/git/github/blog"
 alias note="cd ~/git/github/2018-notebook"
