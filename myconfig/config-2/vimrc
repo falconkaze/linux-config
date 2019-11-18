@@ -83,7 +83,8 @@ set guifont=Monaco:h17          					"设置字体和字的大小
 
 " 定义快捷键的前缀，即<Leader> 
 let mapleader=","
-cnoremap w!! w !sudo tee > /dev/null %
+cnoremap w!! w !sudo tee % > /dev/null
+"cnoremap w!! w !sudo tee > /dev/null %
 
 "Fast reloading of the .vimrc
 "map <silent> <leader>ss :source ~/.vimrc<cr>
@@ -227,6 +228,7 @@ set cursorline				"高亮显示当前行
 "set cursorcolumn			"高亮显示当前列
 set incsearch				"开启实时搜索功能
 set ignorecase				"搜索忽略大小写
+set smartcase               "设置了ignorecase后才有用。如果检索字符中包含大写，就区分大小写
 set hlsearch				"高亮显示搜索结果
 "set textwidth=100           "当每行超过100个字符时自动换行
 set wrap                    "自动折行，并不是加换行符,nowrap
@@ -243,6 +245,7 @@ set showmatch				"高亮显示匹配的括号
 syntax enable									"开启高亮
 syntax on									"允许制定语法高亮替代默认高亮，自动语法高亮
 filetype plugin indent on							"检测文件类型，相关插件及设置
+packadd! matchit
 set autoindent                          "继承前一行的缩进，特别适合用于多行注释,简写为ai
 set smartindent                         "为C语言提供自动缩进，简写为si
 "set cindent                             "使用C样式的缩进
@@ -345,3 +348,16 @@ nnoremap <F3> :Autoformat<cr>
 "
 "let g:formatdef_sqlformat = '"sqlformat --keywords upper -"'
 "let g:formatters_sql = ['sqlformat']
+
+function! Zoom ()
+    " 如果当前标签页窗口多于一个，最大化当前窗口；否则，如果设置了最大化参数，关闭当前窗口
+    if tabpagewinnr(tabpagenr(), '$') > 1
+        tab split
+        let b:is_maximized = 1
+    elseif exists("b:is_maximized")
+        unlet b:is_maximized
+        quit
+    endif
+endfunction
+
+nmap <leader>z :call Zoom()<CR>

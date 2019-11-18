@@ -154,6 +154,8 @@ alias egrep='egrep --color=auto'
 
 alias gcc="gcc -Wall"
 
+alias emacs="emacs -nw"
+
 alias ping="ping -c 3"
 
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -163,7 +165,7 @@ alias timestamp='nanotime=`date +%s%N`;echo ${nanotime:0:13}'
 alias time2date='fun() { date -d @${1} "+%Y-%m-%d %H:%M:%S";};fun'
 
 alias hugonew='fun1() { file=(`hugo new ${1}`) && vim ${file[0]};};fun1'
-alias cd-='fun1() { for(( i = 1; i <= ${1}; i ++ ));do value=${value}"../"; done;cd ${value};};fun1'
+alias cd-='fun1() { if [ $# != 1 ]; then return; fi; local value="./"; for(( i = 1; i <= ${1}; i ++ ));do value=${value}"../"; done;cd ${value};};fun1'
 
 alias reload='source ~/.bashrc'
 alias bashrc='vim ~/.bashrc && source ~/.bashrc'
@@ -181,12 +183,13 @@ alias blog="cd ~/git/github/blog"
 alias note="cd ~/git/github/2018-notebook"
 alias config="cd ~/git/github/linux-config"
 alias read-note="cd ~/git/github/read-note"
+alias alg="cd ~/git/github/leecode"
 
 # bash history config
 export HISTCONTROL=ignoreboth
 export HISTSIZE=10000
 export HISTFILESIZE=10000
-export HISTIGNORE=ls
+export HISTIGNORE="ls:history:pwd:"
 
 # language config
 export LANG=en_US.UTF-8
