@@ -3,15 +3,15 @@ if version >= 603
 	set helplang=cn
 	set encoding=utf-8
 endif
-set nocompatible       " 去掉讨厌的有关vi一致性模式
+set nocompatible       " 去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限
 set fileencoding=utf-8 " 设置文件编码
 set termencoding=utf-8 " 设置终端编码
 set t_Co=256           " 开启256色支持
+set nu                 " nu是number的缩写显示行号
 "if has("termguicolors")
 "    " enable true color
 "    set termguicolors
 "endif
-set nonu               " nu是number的缩写显示行号
 set ruler              " 显示标尺，状态栏的行数信息
 " set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
 set guioptions+=m      " 隐藏菜单栏
@@ -22,7 +22,7 @@ set guioptions-=l
 set guioptions-=L
 set guioptions-=r
 set guioptions-=R
-" 禁止显示菜单和工具条
+" GUI时禁止显示菜单和工具条
 set guioptions-=m
 set guioptions-=T
 " 拼写检查
@@ -65,6 +65,7 @@ Plugin 'hotoo/pangu.vim'                  " 格式化中文文档
 "Plugin 'jiangmiao/auto-pairs'             " 括号和引号的自动补全
 "Plugin 'table-mode'                       " markdown格式化表格
 "Plugin 'tell-k/vim-autopep8'
+"Plugin 'vim-scripts/javacomplete'
 "Plugin 'scrooloose/nerdcommenter'
 
 call vundle#end()                         "stop - all plugins above
@@ -80,6 +81,14 @@ set guifont=Monaco:h17          					"设置字体和字的大小
 "let g:solarized_contrast="normal"
 "let g:solarized_visibility="normal"
 "hi Normal ctermfg=251 ctermbg=none						"ctermfg前景色，ctermbg背景色
+"编程主题
+func SetTheme()
+	set bg=dark                     					"设置背景为黑色
+	colorscheme gruvbox            						"设置主题为 gruvbox
+	set guioptions=                 					"去掉两边的scrollbar
+	set guifont=Monaco:h17          					"设置字体和字的大小
+endfunc
+
 
 " 定义快捷键的前缀，即<Leader> 
 let mapleader=","
@@ -189,6 +198,8 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 "打开vim时不再询问是否加载ycm_extra_conf.py配置"
 "let g:ycm_confirm_extra_conf=0
 "set completeopt=longest,menu
+"python解释器路径"
+"let g:ycm_path_to_python_interpreter='/usr/local/bin/python'
 "是否开启语义补全"
 "let g:ycm_seed_identifiers_with_syntax=1
 "是否在注释中也开启补全"
@@ -278,7 +289,6 @@ func OpenFile()
   else
     set shiftwidth=4                                "设定<<和>>命令缩进的宽度
 	set ts=2
-    set shiftwidth=2                                "设定<<和>>命令缩进的宽度
   endif
 endfunc
 
@@ -287,18 +297,18 @@ endfunc
 autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :! google-chrome-stable %<CR>
 au BufNewFile,BufRead *.hql set filetype=hive
 "-----------------------------------Quick Run!--------------------------------------
-map <F5> :call CompileRunGcc()<CR>
-func! CompileRunGcc()
+map <F5> :call CompileRun()<CR>
+func! CompileRun()
     exec "w"
     if &filetype == 'c'
-        exec "!g++ % -o %<"
-        exec "!time ./%<"
+        exec "!gcc % -o target/%<.out"
+        exec "!time target/%<.out"
     elseif &filetype == 'cpp'
         exec "!g++ % -o %<"
         exec "!time ./%<"
     elseif &filetype == 'java'
-        exec "!javac %"
-        exec "!time java %<"
+        exec "!javac -d target %"
+        exec "!time java -cp target %<"
     elseif &filetype == 'sh'
         :!time bash %
     elseif &filetype == 'python'
@@ -308,7 +318,7 @@ func! CompileRunGcc()
     elseif &filetype == 'go'
 "        exec "!go build %<"
         exec "!time go run %"
-    elseif &filetype == 'mkd'
+    elseif &filetype == 'md'
         exec "!~/.vim/markdown.pl % > %.html &"
         exec "!firefox %.html &"
     endif

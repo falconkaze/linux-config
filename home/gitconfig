@@ -1,0 +1,26 @@
+[user]
+  name = kqyao
+  email = kqyao@mobvoi.com
+[alias]
+  co = checkout 
+  cob = checkout -b
+  ci = commit
+  ca = commit --amend
+  cl = clean
+  br = branch
+  st = status
+  pl = pull
+  plm = pull origin master
+  plb = pull --rebase origin master
+[core]
+  excludesfile = ~/.gitignore
+  editor = vim -u NONE -N
+  quotepath = false
+  safecrlf = warn
+[color]
+  status = auto
+  diff = auto
+  branch = auto
+  interactive = auto
+[push]
+  default = simple

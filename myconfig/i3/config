@@ -22,11 +22,13 @@ font pango:monospace 8
 exec --no-startup-id compton -bCG
 exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpaper/M4A1-001.png
 #exec --no-startup-id nm-applet
-exec --no-startup-id /usr/bin/google-chrome-stable
+#exec --no-startup-id /usr/bin/google-chrome-stable
 exec --no-startup-id /usr/bin/synergy
 exec --no-startup-id /usr/bin/sakura
 exec --no-startup-id /usr/bin/guake
-exec --no-startup-id /usr/local/bin/myidea
+#exec --no-startup-id /usr/local/bin/myidea
+exec /usr/bin/dunst
+exec numlockx on
 # exec --no-startup-id /usr/bin/netease-cloud-music
 #exec --no-startup-id LANG="zh_CN.UTF-8" fcitx &
 #exec --no-startup-id xcompmgr &
@@ -39,7 +41,7 @@ exec --no-startup-id /usr/local/bin/myidea
 # ----------------------------------------------------------------------------
 #                   shortcut keys config
 # ----------------------------------------------------------------------------
-#bindsym $mod+Return exec xfce4-terminal
+bindsym $mod+Return exec xfce4-terminal
 # bindsym $mod+slash exec xfce4-terminal --drop-down
 #bindsym $mod+Return exec i3-sensible-terminal
 

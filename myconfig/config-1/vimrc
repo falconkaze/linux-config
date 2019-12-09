@@ -9,11 +9,11 @@ set termencoding=utf-8 " 设置终端编码
 set t_Co=256           " 开启256色支持
 set nu                 " nu是number的缩写显示行号
 set ruler              " 显示标尺，状态栏的行数信息
-                       " set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
+" set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
 set guioptions+=m      " 隐藏菜单栏
 set laststatus=1       " 隐藏状态栏，2是显示状态栏
 set scrolloff=6        " 上下可视行数
-" GUI时禁止显示滚动条
+" 禁止显示滚动条，适用于gvim
 set guioptions-=l
 set guioptions-=L
 set guioptions-=r
@@ -29,26 +29,26 @@ call vundle#begin()                       " start- all plugins below
 
 Plugin 'VundleVim/Vundle.vim'             " 使用vundle管理插件
 
-Plugin 'morhetz/gruvbox'                  " 安装gruvbox主题
-Plugin 'altercation/vim-colors-solarized' " solarized主题
-
 Plugin 'scrooloose/nerdtree'              " NERD tree文件浏览器
-"Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdcommenter'         " 方便写注释
 Plugin 'Xuyuanp/nerdtree-git-plugin'      " 修改文件时，改变状态显示
 
 Plugin 'Valloric/YouCompleteMe'           " 代码提醒
 Plugin 'vim-syntastic/syntastic'          " 代码检查
 
+Plugin 'morhetz/gruvbox'                  " 安装gruvbox主题
+Plugin 'altercation/vim-colors-solarized' " solarized主题
+
 Plugin 'Lokaltog/vim-powerline'
-Plugin 'junegunn/vim-easy-align'          " 快速对齐格式化
-"Plugin 'terryma/vim-multiple-cursors'     " 多光标编辑
-"Plugin 'table-mode'                       " markdown格式化表格
+Plugin 'Yggdroot/indentLine'
+
 "Plugin 'yianwillis/vimcdoc'               " 中文帮助手册
 
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'Yggdroot/indentLine'
+"Plugin 'terryma/vim-multiple-cursors'     " 多光标编辑
+Plugin 'junegunn/vim-easy-align'          " 快速对齐格式化
+
 Plugin 'jiangmiao/auto-pairs'
+"Plugin 'table-mode'                       " markdown格式化表格
 "Plugin 'tell-k/vim-autopep8'
 "Plugin 'vim-scripts/javacomplete'
 
@@ -56,7 +56,6 @@ call vundle#end()                         "stop - all plugins above
 "-----------------------------------theme config------------------------------------
 colorscheme slate
 "colorscheme solarized
-"set background=dark
 let g:solarized_termcolors=256 
 let g:solarized_termtrans=1
 let g:solarized_contrast="normal"
@@ -109,6 +108,10 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 
+let g:UltiSnipsExpandTrigger="<c-o>"
+" 跳至下个 tab stop
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 "--------------------------------table-mode---------------------------------
 "let g:table_mode_corner = '|'
 "let g:table_mode_border=0
@@ -155,8 +158,6 @@ let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.p
 "nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>              
 "nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>               
 "nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-""默认配置文件路径"
-"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 "打开vim时不再询问是否加载ycm_extra_conf.py配置"
 "let g:ycm_confirm_extra_conf=0
 "set completeopt=longest,menu
@@ -269,7 +270,7 @@ func! CompileRun()
         exec "!g++ % -o %<"
         exec "!time ./%<"
     elseif &filetype == 'java'
-        exec "!javac -d target  %"
+        exec "!javac -d target %"
         exec "!time java -cp target %<"
     elseif &filetype == 'sh'
         :!time bash %
