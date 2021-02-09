@@ -35,7 +35,7 @@ Plugin 'altercation/vim-colors-solarized' " solarized主题
 Plugin 'scrooloose/nerdtree'              " NERD tree文件浏览器
 Plugin 'Xuyuanp/nerdtree-git-plugin'      " 修改文件时，改变状态显示
 
-Plugin 'Valloric/YouCompleteMe'           " 代码提醒
+"Plugin 'Valloric/YouCompleteMe'           " 代码提醒
 Plugin 'vim-syntastic/syntastic'          " 代码检查
 
 Plugin 'Lokaltog/vim-powerline'
@@ -88,7 +88,7 @@ let NERDTreeMinimalUI=1                                 "窗口不显示冗余�
 let NERDTreeAutoDeletebBuffer=1                         "删除文件时自动删除文件对应的buffer
 
 "----------------------------------nerdtree git config---------------------------------
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
     \ "Untracked" : "✭",
