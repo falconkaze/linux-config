@@ -1,11 +1,27 @@
 ;; org mode 下自动换行
 (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 ;; (setq org-src-fontify-natively t)
-(setq org-agenda-files '("~/todos")) ;; 设置默认的 Org Agenda 目录
+(setq org-agenda-files '("~/org/task.org")) ;; 设置默认的 Org Agenda 目录
 (global-set-key (kbd "C-c a") 'org-agenda) ;; 设置 org-agenda 打开的快捷键
 
 ;;(server-start)
 (require 'org-protocol)
+
+;; 任务完成后，自动归档
+(defun my/auto-archive-task (change-plist)
+  (let ((type (plist-get change-plist :type))
+	(pos (plist-get change-plist :position))
+	(from (plist-get change-plist :from))
+	(to (plist-get change-plist :to))
+	)
+    (message "type:%s, pos:%s, from:%s, to:%s" type pos from to)
+    (when (string= to "ARCHIVED")
+      (let ((answer (read-char "Archive this task? y/n (y)")))
+	(when (= answer (string-to-char "y"))
+	    (org-archive-subtree)
+      )))))
+(add-hook 'org-trigger-hook 'my/auto-archive-task)
+(setq org-archive-location "archived_%s::datetree/")
 
 ;; org-capture 配置
 (defun get-year-and-month ()

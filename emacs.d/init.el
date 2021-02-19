@@ -23,6 +23,8 @@
 (global-auto-revert-mode 1) ;; 自动加载外部修改过的文件
 (setq auto-save-default nil) ;; 不生产自动保存的文件
 (fset 'yes-or-no-p 'y-or-n-p) ;; 所有yes/no都改为y/n
+
+(add-hook 'evil-insert-state-exit-hook 'save-buffer)
 ;;
 ;;(custom-set-variables
 ;; ;; custom-set-variables was added by Custom.
@@ -103,15 +105,3 @@
 	     (ignore-errors (backward-up-list))
 	     (funcall fn)))))
 (message "Config load finish!!!")
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files '("~/org/task.org")))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
