@@ -3,8 +3,8 @@
 (require 'init-keybindings)
 (require 'init-org)
 ;(require 'custom)
-;;
-;;;; =========================== 通用配置 ============================
+
+;; ============================= 通用配置 ============================
 (setq inhibit-splash-screen 1) ;; 关闭启动帮助画面
 (tool-bar-mode -1) ;; 关闭工具栏
 (scroll-bar-mode -1) ; 关闭文件滑动控件
@@ -24,31 +24,25 @@
 (setq auto-save-default nil) ;; 不生产自动保存的文件
 (fset 'yes-or-no-p 'y-or-n-p) ;; 所有yes/no都改为y/n
 
-(add-hook 'evil-insert-state-exit-hook 'save-buffer)
-;;
-;;(custom-set-variables
-;; ;; custom-set-variables was added by Custom.
-;; ;; If you edit it by hand, you could mess it up, so be careful.
-;; ;; Your init file should contain only one such instance.
-;; ;; If there is more than one, they won't work right.
-;; '(custom-enabled-themes '(spacemacs-dark))
-;; '(custom-safe-themes
-;;   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
-;; '(package-archives
-;;   '(("org" . "http://orgmode.org/elpa/")
-;;     ("melpa-stable" . "https://stable.melpa.org/packages/")
-;;     ("melpa" . "https://melpa.org/packages/")
-;;     ("gnu" . "https://elpa.gnu.org/packages/")))
-;; '(package-selected-packages '(spacemacs-theme evil)))
-;;(custom-set-faces
-;; ;; custom-set-faces was added by Custom.
-;; ;; If you edit it by hand, you could mess it up, so be careful.
-;; ;; Your init file should contain only one such instance.
-;; ;; If there is more than one, they won't work right.
-;; )
-;;
 (require 'evil)
 (evil-mode 1)
+(add-hook 'evil-insert-state-exit-hook 'save-buffer) ;; 离开插入模式时保存当前文件
+;; 退出 Evil Insert 模式时切换到英文输入法。
+(add-hook 'evil-insert-state-exit-hook '(lambda ()
+					  (setq-local my/input-method (shell-command-to-string "/Users/yaokeqi/git/mine/linux-config/sh/currentInputMethod"))
+					  (call-process-shell-command "/Users/yaokeqi/git/mine/linux-config/sh/switchInputMethod en" nil nil t)))
+;; 回到 Evil Insert 模式时切换到原来的输入法。
+(add-hook 'evil-insert-state-entry-hook '(lambda ()
+					   (when (boundp 'my/input-method)
+					     (call-process-shell-command "/Users/yaokeqi/git/mine/linux-config/sh/switchInputMethod" nil nil t my/input-method)
+					     )
+					   ))
+
+;; 配置最近文件 https://www.emacswiki.org/emacs/RecentFiles
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+(setq recentf-max-saved-items 25)
+(global-set-key "\C-x\ \C-r" 'helm-recentf)
 
 (global-company-mode 1) ;; 开启全局 company 补全
 (add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
