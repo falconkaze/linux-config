@@ -21,6 +21,8 @@ set guioptions-=R
 " 禁止显示菜单和工具条
 set guioptions-=m
 set guioptions-=T
+" 设置 MacOS 的delete按键模式
+set backspace=2
 
 "---------------------------------------Plugin--------------------------------------
 set rtp+=~/.vim/bundle/Vundle.vim         " initialize vundle

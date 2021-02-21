@@ -1,7 +1,7 @@
 ;; org mode 下自动换行
 (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 ;; (setq org-src-fontify-natively t)
-(setq org-agenda-files '("~/org/task.org")) ;; 设置默认的 Org Agenda 目录
+(setq org-agenda-files '("~/org/daily.org" "~/org/work.org")) ;; 设置默认的 Org Agenda 目录
 (global-set-key (kbd "C-c a") 'org-agenda) ;; 设置 org-agenda 打开的快捷键
 
 ;;(server-start)
@@ -15,13 +15,15 @@
 	(to (plist-get change-plist :to))
 	)
     (message "type:%s, pos:%s, from:%s, to:%s" type pos from to)
-    (when (string= to "ARCHIVED")
-      (let ((answer (read-char "Archive this task? y/n (y)")))
+    (when (or (and (string= from nil)
+	       (string= to "TODO"))
+	      (string= to "ARCHIVED"))
+      (let ((answer (read-char (format "Archive this %s task? y/n (y)" to))))
 	(when (= answer (string-to-char "y"))
 	    (org-archive-subtree)
       )))))
+(setq org-archive-location "archived/a_%s::datetree/")
 (add-hook 'org-trigger-hook 'my/auto-archive-task)
-(setq org-archive-location "archived_%s::datetree/")
 
 ;; org-capture 配置
 (defun get-year-and-month ()
@@ -48,6 +50,34 @@
       (setq end (save-excursion (org-end-of-subtree t t))))
     (org-end-of-subtree)))
 
+(defun get-work-tree()
+  (list "Work" "Task" (format-time-string "%Y年") (format-time-string "%Y年%W周")))
+(defun find-week-tree (tree-list)
+  (let* ((path tree-list)
+         (level 1)
+	 my/target-tree-not-exist
+         end)
+    (unless (derived-mode-p 'org-mode)
+      (error "Target buffer \"%s\" should be in Org mode" (current-buffer)))
+    (goto-char (point-min))             ;移动到 buffer 的开始位置
+    ;; 先定位表示年份的 headline，再定位表示月份的 headline
+    (dolist (heading path)
+      (let ((re (format org-complex-heading-regexp-format
+                        (regexp-quote heading)))
+            (cnt 0))
+        (if (re-search-forward re end t)
+            (goto-char (point-at-eol))  ;如果找到了 headline 就移动到对应的位置
+          (progn                        ;否则就新建一个 headline
+            (or (bolp) (insert "\n"))
+            (if (/= (point) (point-min)) (org-end-of-subtree t t))
+	    (setq my/target-tree-not-exist t)
+            (insert (make-string level ?*) " " heading "\n"))))
+      (setq level (1+ level))
+      (setq end (save-excursion (org-end-of-subtree t t))))
+    (when (not(null my/target-tree-not-exist))
+        (message "aa hello")
+	(org-end-of-subtree))))
+
 (global-set-key (kbd "C-c c") 'org-capture)
 (setq org-default-notes-file "~/org/inbox.org")
 (setq org-capture-templates nil)
@@ -56,19 +86,20 @@
 (add-to-list 'org-capture-templates
 	     '("tr" "Read Book Task" entry
 	       (file+olp "~/org/task.org" "Tasks" "Reading" "Book")
-	       "* TODO %^{书名}\n%U\n" :clock-in t :clock-resume t))
-(add-to-list 'org-capture-templates
-	     '("tw" "Work Task" entry
-	       (file+olp "~/org/task.org" "Tasks" "Work")
-	       "* TODO %^{任务名}\n%U\n" :clock-in t :clock-resume t))
+	       "* %^{书名}\n%U\n" :clock-in t :clock-resume t))
 (add-to-list 'org-capture-templates
 	     '("tt" "Tool Task" entry
 	       (file+olp "~/org/task.org" "Tasks" "Tool")
-	       "* TODO %^{任务名}\n%U\n" :clock-in t :clock-resume t))
+	       "* %^{任务名}\n%U\n" :clock-in t :clock-resume t))
 (add-to-list 'org-capture-templates
 	     '("ts" "Study Task" entry
 	       (file+olp "~/org/task.org" "Tasks" "Study")
-	       "* TODO %^{任务名}\n%U\n" :clock-in t :clock-resume t))
+	       "* %^{任务名}\n%U\n" :clock-in t :clock-resume t))
+(add-to-list 'org-capture-templates
+	     '("tw" "Work Task" entry
+	       (file+function "~/org/work.org" (lambda () (find-tree1)))
+	       ;;(file+function "~/org/work.org" (lambda () (find-week-tree (get-work-tree))))
+	       "* TODO %^{任务名}\n%U\n" :clock-in t :clock-resume t ))
 ;; note 相关
 (add-to-list 'org-capture-templates '("n" "Notes"))
 ;; 日志/日记相关
@@ -81,10 +112,6 @@
 	     '("bg" "Game Billing" plain
 	       (file+function "~/org/billing.org" find-month-tree)
 	       " | %u | 游戏 | %^{描述} | %^{金额} |" :kill-buffer t))
-(add-to-list 'org-capture-templates
-	     '("bl" "Life Billing" plain
-	       (file+function "~/org/billing.org" find-month-tree)
-	       " | %u | 生活 | %^{描述} | %^{金额} |" :kill-buffer t))
 (add-to-list 'org-capture-templates
 	     '("bl" "Life Billing" plain
 	       (file+function "~/org/billing.org" find-month-tree)
