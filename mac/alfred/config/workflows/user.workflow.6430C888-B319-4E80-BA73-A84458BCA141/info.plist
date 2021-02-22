@@ -416,6 +416,8 @@
 		</dict>
 		<key>F3360F75-861A-453B-8ECC-81DF55D9D568</key>
 		<dict>
+			<key>note</key>
+			<string>调用 emacsclient 保存 capture 内容</string>
 			<key>xpos</key>
 			<integer>490</integer>
 			<key>ypos</key>
@@ -424,7 +426,7 @@
 		<key>FF316160-82F1-4AC1-8D82-72A1F0AC9ED6</key>
 		<dict>
 			<key>note</key>
-			<string>转换 org-protocol</string>
+			<string>抓取当前网页，转换 org-protocol url</string>
 			<key>xpos</key>
 			<integer>335</integer>
 			<key>ypos</key>

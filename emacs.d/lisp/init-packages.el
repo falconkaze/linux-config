@@ -31,9 +31,12 @@
 		    company-jedi
 		    ;; --- better editor ---
 		    hungry-delete
+		    ;; TODO
 		    swiper
 		    counsel
+		    ;; TODO
 		    smartparens
+		    rainbow-delimiters
 		    ;; --- Major Mode ---
 		    js2-mode
 		    ;; --- Minor Mode ---

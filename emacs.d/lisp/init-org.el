@@ -24,6 +24,11 @@
       )))))
 (setq org-archive-location "archived/a_%s::datetree/")
 (add-hook 'org-trigger-hook 'my/auto-archive-task)
+;; 归档后保存所有文件
+(defun my/save-auto-archive-file ()
+  (interactive)
+  (save-some-buffers 'no-confirm))
+(advice-add 'org-archive-subtree :after #'my/save-auto-archive-file)
 
 ;; org-capture 配置
 (defun get-year-and-month ()
@@ -52,7 +57,7 @@
 
 (defun get-work-tree()
   (list "Work" "Task" (format-time-string "%Y年") (format-time-string "%Y年%W周")))
-(defun find-week-tree (tree-list)
+(defun find-tree-location (tree-list)
   (let* ((path tree-list)
          (level 1)
 	 my/target-tree-not-exist
@@ -97,8 +102,7 @@
 	       "* %^{任务名}\n%U\n" :clock-in t :clock-resume t))
 (add-to-list 'org-capture-templates
 	     '("tw" "Work Task" entry
-	       (file+function "~/org/work.org" (lambda () (find-tree1)))
-	       ;;(file+function "~/org/work.org" (lambda () (find-week-tree (get-work-tree))))
+	       (file+function "~/org/work.org" (lambda () (find-tree-location (get-work-tree))))
 	       "* TODO %^{任务名}\n%U\n" :clock-in t :clock-resume t ))
 ;; note 相关
 (add-to-list 'org-capture-templates '("n" "Notes"))
@@ -116,6 +120,14 @@
 	     '("bl" "Life Billing" plain
 	       (file+function "~/org/billing.org" find-month-tree)
 	       " | %u | 生活 | %^{描述} | %^{金额} |" :kill-buffer t))
+(add-to-list 'org-capture-templates
+	     '("bp" "Piety Parent" plain
+	       (file+function "~/org/billing.org" find-month-tree)
+	       " | %u | 孝敬父母 | %^{描述} | %^{金额} |" :kill-buffer t))
+(add-to-list 'org-capture-templates
+	     '("bh" "Home Output" plain
+	       (file+function "~/org/billing.org" find-month-tree)
+	       " | %u | 家庭支出 | %^{描述} | %^{金额} |" :kill-buffer t))
 ;; 管理密码
 (defun random-alphanum ()
   (let* ((charset "abcdefghijklmnopqrstuvwxyz0123456789")
