@@ -1,5 +1,7 @@
 ;; org mode 下自动换行
 (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
+;; 设置 org 文件默认的折叠方式
+(setq org-startup-folded 'content)
 ;; (setq org-src-fontify-natively t)
 (setq org-agenda-files '("~/org/daily.org" "~/org/work.org")) ;; 设置默认的 Org Agenda 目录
 (global-set-key (kbd "C-c a") 'org-agenda) ;; 设置 org-agenda 打开的快捷键
