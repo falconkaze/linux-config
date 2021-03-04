@@ -125,7 +125,7 @@
 				<key>runningsubtext</key>
 				<string>检索中......</string>
 				<key>script</key>
-				<string>~/bin/ipython/bin/python3 ~/work/script/alfred/kconf.py "{query}"
+				<string>~/bin/ipython/bin/python3 ~/work/script/alfred/kconf.py {query}
 </string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -194,7 +194,7 @@
 				<key>runningsubtext</key>
 				<string>搜索中......</string>
 				<key>script</key>
-				<string>~/bin/ipython/bin/python3 ~/work/script/alfred/kswitch.py "{query}"</string>
+				<string>~/bin/ipython/bin/python3 ~/work/script/alfred/kswitch.py {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -227,7 +227,7 @@
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
-				<integer>0</integer>
+				<integer>2</integer>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>queuedelaycustom</key>
@@ -274,7 +274,7 @@ EOB</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
-				<true/>
+				<false/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
@@ -376,7 +376,7 @@ EOB</string>
 				<key>argument</key>
 				<string></string>
 				<key>passthroughargument</key>
-				<true/>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>kswc_env</key>
@@ -432,6 +432,10 @@ EOB</string>
 		</dict>
 		<key>BF3880F3-D6BE-4A23-8419-BAC46D7D715E</key>
 		<dict>
+			<key>note</key>
+			<string>1. 搜索 kconf，渲染，展示
+2. 手动选择目标 kconf
+3. 打开网址</string>
 			<key>xpos</key>
 			<integer>185</integer>
 			<key>ypos</key>

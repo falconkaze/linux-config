@@ -8,19 +8,6 @@
 	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
-		<key>15299C7A-CDEA-4359-8898-446F2892DB7C</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>CCC27A32-D841-4CA5-A185-39A120CF0D6A</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>3896A5D1-FEE8-42D4-BC81-CA7F18122FDE</key>
 		<array>
 			<dict>
@@ -60,8 +47,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>CCC27A32-D841-4CA5-A185-39A120CF0D6A</key>
-		<array/>
 		<key>DFA2BF41-C59C-4735-87A9-65F3ECD919F8</key>
 		<array>
 			<dict>
@@ -109,47 +94,63 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>【Emacs】capture web content</string>
+	<string>Capture web content</string>
 	<key>objects</key>
 	<array>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
 				<integer>1</integer>
-				<key>keyword</key>
-				<string>ecp</string>
-				<key>subtext</key>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
 				<string></string>
-				<key>text</key>
-				<string>Chrome capture</string>
-				<key>withspace</key>
-				<true/>
+				<key>hotkey</key>
+				<integer>45</integer>
+				<key>hotmod</key>
+				<integer>524288</integer>
+				<key>hotstring</key>
+				<string>N</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedApps</key>
+				<array>
+					<string>com.google.Chrome</string>
+				</array>
+				<key>relatedAppsMode</key>
+				<integer>1</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
-			<string>15299C7A-CDEA-4359-8898-446F2892DB7C</string>
+			<string>3896A5D1-FEE8-42D4-BC81-CA7F18122FDE</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
 				<key>argument</key>
-				<string>{query}</string>
+				<string></string>
 				<key>passthroughargument</key>
 				<false/>
 				<key>variables</key>
 				<dict>
+					<key>msg</key>
+					<string>{query}</string>
 					<key>template</key>
-					<string>pb</string>
+					<string>pn</string>
 				</dict>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
-			<string>CCC27A32-D841-4CA5-A185-39A120CF0D6A</string>
+			<string>DFA2BF41-C59C-4735-87A9-65F3ECD919F8</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -256,63 +257,6 @@
 				<key>focusedappvariablename</key>
 				<string></string>
 				<key>hotkey</key>
-				<integer>45</integer>
-				<key>hotmod</key>
-				<integer>524288</integer>
-				<key>hotstring</key>
-				<string>N</string>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedApps</key>
-				<array>
-					<string>com.google.Chrome</string>
-				</array>
-				<key>relatedAppsMode</key>
-				<integer>1</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>3896A5D1-FEE8-42D4-BC81-CA7F18122FDE</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argument</key>
-				<string></string>
-				<key>passthroughargument</key>
-				<false/>
-				<key>variables</key>
-				<dict>
-					<key>msg</key>
-					<string>{query}</string>
-					<key>template</key>
-					<string>pn</string>
-				</dict>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
-			<key>uid</key>
-			<string>DFA2BF41-C59C-4735-87A9-65F3ECD919F8</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>1</integer>
-				<key>focusedappvariable</key>
-				<false/>
-				<key>focusedappvariablename</key>
-				<string></string>
-				<key>hotkey</key>
 				<integer>0</integer>
 				<key>hotmod</key>
 				<integer>524288</integer>
@@ -345,8 +289,6 @@
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key></key>
-					<string></string>
 					<key>msg</key>
 					<string>{query}</string>
 					<key>template</key>
@@ -365,54 +307,40 @@
 	<string></string>
 	<key>uidata</key>
 	<dict>
-		<key>15299C7A-CDEA-4359-8898-446F2892DB7C</key>
-		<dict>
-			<key>xpos</key>
-			<integer>50</integer>
-			<key>ypos</key>
-			<integer>50</integer>
-		</dict>
 		<key>3896A5D1-FEE8-42D4-BC81-CA7F18122FDE</key>
 		<dict>
 			<key>xpos</key>
-			<integer>50</integer>
+			<integer>55</integer>
 			<key>ypos</key>
-			<integer>280</integer>
+			<integer>140</integer>
 		</dict>
 		<key>7234E9EA-EE8D-4B4F-95C3-F4BCD3F6BEFE</key>
 		<dict>
 			<key>xpos</key>
-			<integer>45</integer>
+			<integer>55</integer>
 			<key>ypos</key>
-			<integer>445</integer>
+			<integer>275</integer>
 		</dict>
 		<key>A70A4E1E-712E-4575-967A-0AA64960904D</key>
 		<dict>
 			<key>xpos</key>
-			<integer>655</integer>
+			<integer>645</integer>
 			<key>ypos</key>
-			<integer>160</integer>
+			<integer>205</integer>
 		</dict>
 		<key>C97D1485-8CC6-4897-B03A-89D7401F4F73</key>
 		<dict>
 			<key>xpos</key>
-			<integer>235</integer>
+			<integer>240</integer>
 			<key>ypos</key>
-			<integer>475</integer>
-		</dict>
-		<key>CCC27A32-D841-4CA5-A185-39A120CF0D6A</key>
-		<dict>
-			<key>xpos</key>
-			<integer>225</integer>
-			<key>ypos</key>
-			<integer>80</integer>
+			<integer>305</integer>
 		</dict>
 		<key>DFA2BF41-C59C-4735-87A9-65F3ECD919F8</key>
 		<dict>
 			<key>xpos</key>
-			<integer>235</integer>
+			<integer>240</integer>
 			<key>ypos</key>
-			<integer>310</integer>
+			<integer>170</integer>
 		</dict>
 		<key>F3360F75-861A-453B-8ECC-81DF55D9D568</key>
 		<dict>
@@ -421,16 +349,16 @@
 			<key>xpos</key>
 			<integer>490</integer>
 			<key>ypos</key>
-			<integer>160</integer>
+			<integer>205</integer>
 		</dict>
 		<key>FF316160-82F1-4AC1-8D82-72A1F0AC9ED6</key>
 		<dict>
 			<key>note</key>
 			<string>抓取当前网页，转换 org-protocol url</string>
 			<key>xpos</key>
-			<integer>335</integer>
+			<integer>330</integer>
 			<key>ypos</key>
-			<integer>160</integer>
+			<integer>205</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
