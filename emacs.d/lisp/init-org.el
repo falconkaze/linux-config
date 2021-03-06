@@ -3,7 +3,9 @@
 ;; 设置 org 文件默认的折叠方式
 (setq org-startup-folded 'content)
 ;; (setq org-src-fontify-natively t)
-(setq org-agenda-files '("~/org/daily.org" "~/org/work.org")) ;; 设置默认的 Org Agenda 目录
+;; 设置默认的 Org Agenda 目录
+(setq org-agenda-files '("~/org/common"
+			 "~/org/private"))
 (global-set-key (kbd "C-c a") 'org-agenda) ;; 设置 org-agenda 打开的快捷键
 
 ;;(server-start)
@@ -99,6 +101,10 @@
 	       (file+olp "~/org/task.org" "Tasks" "Tool")
 	       "* %^{任务名}\n%U\n" :clock-in t :clock-resume t))
 (add-to-list 'org-capture-templates
+	     '("pt" "Protocol Task" entry
+	       (file+olp "~/org/task.org" "Tasks" "Tool")
+	       "* %:title\n%U\n" :clock-in t :clock-resume t :immediate-finish t :kill-buffer t))
+(add-to-list 'org-capture-templates
 	     '("ts" "Study Task" entry
 	       (file+olp "~/org/task.org" "Tasks" "Study")
 	       "* %^{任务名}\n%U\n" :clock-in t :clock-resume t))
@@ -183,5 +189,40 @@
                (file+function "~/org/web.org" org-capture-template-goto-link)
                "  %U - %?\n\n  %:initial" :empty-lines 1))
 ;; Anki 卡片
+
+;; source code block
+(defun org-insert-src-block (src-code-type)
+  "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
+  (interactive
+   (let ((src-code-types
+          '("emacs-lisp" "python" "C" "sh" "java" "js" "clojure" "C++" "css"
+            "calc" "asymptote" "dot" "gnuplot" "ledger" "lilypond" "mscgen"
+            "octave" "oz" "plantuml" "R" "sass" "screen" "sql" "awk" "ditaa"
+            "haskell" "latex" "lisp" "matlab" "ocaml" "org" "perl" "ruby"
+            "scheme" "sqlite")))
+     (list (ido-completing-read "Source code type: " src-code-types))))
+  (progn
+    (newline-and-indent)
+    (insert (format "#+BEGIN_SRC %s\n" src-code-type))
+    (newline-and-indent)
+    (insert "#+END_SRC\n")
+    (previous-line 2)
+    (org-edit-src-code)))
+
+(add-hook 'org-mode-hook '(lambda ()
+                            ;; turn on flyspell-mode by default
+                            (flyspell-mode 1)
+                            ;; C-TAB for expanding
+                            (local-set-key (kbd "C-<tab>")
+                                           'yas/expand-from-trigger-key)
+                            ;; keybinding for editing source code blocks
+                            (local-set-key (kbd "C-c s e")
+                                           'org-edit-src-code)
+                            ;; keybinding for inserting code blocks
+                            (local-set-key (kbd "C-c s i")
+                                           'org-insert-src-block)
+                            ))
+
+(setq org-src-fontify-natively t)
 
 (provide 'init-org)

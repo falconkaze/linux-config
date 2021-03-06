@@ -48,6 +48,7 @@
 		    ;; --- Productivity ------
 		    helm
 		    yasnippet
+		    yasnippet-snippets
 		    anki-editor
 		    ;; --- Themes ---
 		    monokai-theme
@@ -104,8 +105,12 @@
   )
 (add-hook 'python-mode-hook 'jedi:setup)
 (add-hook 'python-mode-hook 'config/enable-jedi)
-
-;;(yas-reload-all)
+(require 'yasnippet)
+(setq yas-snippet-dirs
+      '("~/.emacs.d/elpa/yasnippet-snippets-20210105.1346/snippets"
+	"~/.emacs.d/snippets/"
+	))
+(yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
 
 ;; anki

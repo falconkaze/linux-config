@@ -98,4 +98,22 @@
 	(t (save-excursion
 	     (ignore-errors (backward-up-list))
 	     (funcall fn)))))
+
+(defun arrange-frame (w h x y)
+  "Set the width, height, and x/y position of the current frame"
+  (let ((frame (selected-frame)))
+    (delete-other-windows)
+    (set-frame-position frame x y)
+    (set-frame-size frame w h)
+  )
+)
+;;(add-hook 'after-make-frame-hook
+;;	  #'(lambda () (arrange-frame 100 35 0 0)))
+;; (arrange-frame 120 30 100 50)
+(add-hook 'before-make-frame-hook
+          #'(lambda ()
+              (add-to-list 'default-frame-alist '(left   . 0))
+              (add-to-list 'default-frame-alist '(top    . 0))
+              (add-to-list 'default-frame-alist '(height . 35))
+              (add-to-list 'default-frame-alist '(width  . 100))))
 (message "Config load finish!!!")

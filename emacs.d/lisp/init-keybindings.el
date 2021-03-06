@@ -22,5 +22,8 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 
+;; org 快捷键
+(global-set-key (kbd "C-c l") 'org-store-link)
+
 ;; TODO 根据书签的标题来过滤
  (provide 'init-keybindings)

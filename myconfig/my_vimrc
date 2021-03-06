@@ -227,8 +227,8 @@ func SetTitle()
 		call append(line(".")+1,"# -*- coding: utf-8 -*-")
         call append(line(".")+2,"")
     elseif &filetype == 'sh'
-        call append(line("."),"#!/usr/bin/env bash")
-        call append(line(".")+1,"")
+        call setline(1,"#!/usr/bin/env bash")
+        call append(1,"")
 	endif
 endfunc
 "----------------------------------when open file-------------------------------------
