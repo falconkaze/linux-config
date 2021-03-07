@@ -228,7 +228,8 @@ func SetTitle()
         call append(line(".")+2,"")
     elseif &filetype == 'sh'
         call setline(1,"#!/usr/bin/env bash")
-        call append(1,"")
+        call append(1,"cd $(dirname $0)")
+        call append(2,"")
 	endif
 endfunc
 "----------------------------------when open file-------------------------------------

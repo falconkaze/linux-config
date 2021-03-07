@@ -7,6 +7,8 @@
 (setq org-agenda-files '("~/org/common"
 			 "~/org/private"))
 (global-set-key (kbd "C-c a") 'org-agenda) ;; 设置 org-agenda 打开的快捷键
+(setq org-use-fast-todo-selection t)
+;; (setq org-treat-S-cursor-todo-selection-as-state-change nil)
 
 ;;(server-start)
 (require 'org-protocol)
@@ -88,53 +90,49 @@
 	(org-end-of-subtree))))
 
 (global-set-key (kbd "C-c c") 'org-capture)
-(setq org-default-notes-file "~/org/inbox.org")
+(setq org-default-notes-file "~/org/common/inbox.org")
 (setq org-capture-templates nil)
 ;; task 相关
 (add-to-list 'org-capture-templates '("t" "Tasks"))
 (add-to-list 'org-capture-templates
 	     '("tr" "Read Book Task" entry
-	       (file+olp "~/org/task.org" "Tasks" "Reading" "Book")
+	       (file+olp "~/org/common/task.org" "Tasks" "Reading" "Book")
 	       "* %^{书名}\n%U\n" :clock-in t :clock-resume t))
 (add-to-list 'org-capture-templates
 	     '("tt" "Tool Task" entry
-	       (file+olp "~/org/task.org" "Tasks" "Tool")
+	       (file+olp "~/org/common/task.org" "Tasks" "Tool")
 	       "* %^{任务名}\n%U\n" :clock-in t :clock-resume t))
 (add-to-list 'org-capture-templates
-	     '("pt" "Protocol Task" entry
-	       (file+olp "~/org/task.org" "Tasks" "Tool")
-	       "* %:title\n%U\n" :clock-in t :clock-resume t :immediate-finish t :kill-buffer t))
-(add-to-list 'org-capture-templates
 	     '("ts" "Study Task" entry
-	       (file+olp "~/org/task.org" "Tasks" "Study")
+	       (file+olp "~/org/common/task.org" "Tasks" "Study")
 	       "* %^{任务名}\n%U\n" :clock-in t :clock-resume t))
 (add-to-list 'org-capture-templates
 	     '("tw" "Work Task" entry
-	       (file+function "~/org/work.org" (lambda () (find-tree-location (get-work-tree))))
+	       (file+function "~/org/private/work.org" (lambda () (find-tree-location (get-work-tree))))
 	       "* TODO %^{任务名}\n%U\n" :clock-in t :clock-resume t ))
 ;; note 相关
 (add-to-list 'org-capture-templates '("n" "Notes"))
 ;; 日志/日记相关
 (add-to-list 'org-capture-templates
-             '("j" "Journal" entry (file+datetree "~/org/journal.org")
+             '("j" "Journal" entry (file+datetree "~/org/common/journal.org")
                "* %U - %^{heading}\n  %?"))
 ;; 账单相关
 (add-to-list 'org-capture-templates '("b" "Billing"))
 (add-to-list 'org-capture-templates
 	     '("bg" "Game Billing" plain
-	       (file+function "~/org/billing.org" find-month-tree)
+	       (file+function "~/org/common/billing.org" find-month-tree)
 	       " | %u | 游戏 | %^{描述} | %^{金额} |" :kill-buffer t))
 (add-to-list 'org-capture-templates
 	     '("bl" "Life Billing" plain
-	       (file+function "~/org/billing.org" find-month-tree)
+	       (file+function "~/org/common/billing.org" find-month-tree)
 	       " | %u | 生活 | %^{描述} | %^{金额} |" :kill-buffer t))
 (add-to-list 'org-capture-templates
 	     '("bp" "Piety Parent" plain
-	       (file+function "~/org/billing.org" find-month-tree)
+	       (file+function "~/org/common/billing.org" find-month-tree)
 	       " | %u | 孝敬父母 | %^{描述} | %^{金额} |" :kill-buffer t))
 (add-to-list 'org-capture-templates
 	     '("bh" "Home Output" plain
-	       (file+function "~/org/billing.org" find-month-tree)
+	       (file+function "~/org/common/billing.org" find-month-tree)
 	       " | %u | 家庭支出 | %^{描述} | %^{金额} |" :kill-buffer t))
 ;; 管理密码
 (defun random-alphanum ()
@@ -155,7 +153,7 @@
     password))
 
 (add-to-list 'org-capture-templates
-             '("s" "Security/Password" entry (file "~/org/passwords.org.cpt")
+             '("s" "Security/Password" entry (file "~/org/common/passwords.org.cpt")
                "* %^{title} %^G\n\n  - 用户名: %^{用户名}\n  - 密码: %(get-or-create-password)\n  - 时间: %U"
                :empty-lines 1 :kill-buffer t))
 ;; 新建博客文章
@@ -163,12 +161,20 @@
 (add-to-list 'org-capture-templates '("p" "Protocol"))
 (add-to-list 'org-capture-templates
              '("pb" "Protocol Bookmarks" entry
-               (file+headline "~/org/web.org" "Bookmarks")
+               (file+headline "~/org/common/web.org" "Bookmarks")
                "* %U - %:annotation\n" :immediate-finish t :kill-buffer t))
 (add-to-list 'org-capture-templates
              '("pn" "Protocol Notes" entry
-               (file+headline "~/org/web.org" "Notes")
+               (file+headline "~/org/common/web.org" "Notes")
                "* %U - %:annotation\n %:initial\n" :empty-lines 1 :immediate-finish t :kill-buffer t))
+(add-to-list 'org-capture-templates
+	     '("pt" "Protocol Task" entry
+	       (file+olp "~/org/common/task.org" "Tasks" "Tool")
+	       "* %:description\n%U\n" :immediate-finish t :kill-buffer t))
+(add-to-list 'org-capture-templates
+	     '("ps" "Protocol Study" entry
+	       (file+olp "~/org/common/task.org" "Tasks" "Study")
+	       "* %:description\n%U\n" :immediate-finish t :kill-buffer t))
 
 (defun org-capture-template-goto-link ()
   (org-capture-put :target (list 'file+headline
@@ -186,7 +192,7 @@
       (insert "* " hd "\n"))))
 (add-to-list 'org-capture-templates
              '("pa" "Protocol Annotation" plain
-               (file+function "~/org/web.org" org-capture-template-goto-link)
+               (file+function "~/org/common/web.org" org-capture-template-goto-link)
                "  %U - %?\n\n  %:initial" :empty-lines 1))
 ;; Anki 卡片
 
